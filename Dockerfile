@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 # Install cron, bash, sshpass, and croniter
 RUN apt-get update \
-    && apt-get install -y cron bash curl sshpass expect \
+    && apt-get install -y cron bash curl sshpass \
     && pip install croniter \
     && rm -rf /var/lib/apt/lists/*
 

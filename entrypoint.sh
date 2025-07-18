@@ -5,13 +5,13 @@ set -e
 CRON_FILE=/etc/cron.d/myscript
 
 # This will echo the date and a message, run the script, and log success or error
-CMD="echo [\$(date '+%Y-%m-%d %H:%M:%S')] Running $SCRIPT_PATH | tee -a /var/log/cron.log; \
-if /bin/bash $SCRIPT_PATH 2>&1 | tee -a /var/log/cron.log; then \
-  echo [\$(date '+%Y-%m-%d %H:%M:%S')] $SCRIPT_PATH finished successfully | tee -a /var/log/cron.log; \
+CMD='echo [$(date "+%Y-%m-%d %H:%M:%S")] Running '"$SCRIPT_PATH"' | tee -a /var/log/cron.log; \
+if /bin/bash '"$SCRIPT_PATH"' 2>&1 | tee -a /var/log/cron.log; then \
+  echo [$(date "+%Y-%m-%d %H:%M:%S")] '"$SCRIPT_PATH"' finished successfully | tee -a /var/log/cron.log; \
 else \
-  echo [\$(date '+%Y-%m-%d %H:%M:%S')] ERROR: $SCRIPT_PATH failed with exit code \$? | tee -a /var/log/cron.log; \
-fi"
-echo "$CRON_SCHEDULE root bash -c '$CMD'" > $CRON_FILE
+  echo [$(date "+%Y-%m-%d %H:%M:%S")] ERROR: '"$SCRIPT_PATH"' failed with exit code $? | tee -a /var/log/cron.log; \
+fi'
+echo "$CRON_SCHEDULE root bash -c $CMD" > $CRON_FILE
 chmod 0644 $CRON_FILE
 # crontab $CRON_FILE
 

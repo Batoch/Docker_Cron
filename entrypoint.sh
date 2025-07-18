@@ -19,6 +19,19 @@ chmod 0644 $CRON_FILE
 mkdir -p /var/log
 : > /var/log/cron.log
 
+# Optionally run the script once after init if RUN_ON_START is set to 'true'
+if [ "${RUN_ON_START:-false}" = "true" ]; then
+  echo "[INIT] RUN_ON_START is true, running $SCRIPT_PATH immediately..."
+  echo "[INIT] --- Immediate run start ---"
+  echo [$(date '+%Y-%m-%d %H:%M:%S')] Running $SCRIPT_PATH | tee -a /var/log/cron.log
+  if /bin/bash $SCRIPT_PATH 2>&1 | tee -a /var/log/cron.log; then
+    echo [$(date '+%Y-%m-%d %H:%M:%S')] $SCRIPT_PATH finished successfully | tee -a /var/log/cron.log
+  else
+    echo [$(date '+%Y-%m-%d %H:%M:%S')] ERROR: $SCRIPT_PATH failed with exit code $? | tee -a /var/log/cron.log
+  fi
+  echo "[INIT] --- Immediate run end ---"
+fi
+
 # Start cron in the background
 cron
 

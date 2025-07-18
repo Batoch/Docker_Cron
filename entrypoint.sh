@@ -14,7 +14,7 @@ else \
 fi"
 echo "$CRON_SCHEDULE root sh -c '$CMD'" > $CRON_FILE
 chmod 0644 $CRON_FILE
-crontab $CRON_FILE
+# crontab $CRON_FILE
 
 # Ensure log file exists
 mkdir -p /var/log

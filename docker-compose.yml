@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  cronjob:
+    build: .
+    container_name: cronjob
+    environment:
+      - CRON_SCHEDULE=0 * * * * # Default: every hour
+      - SCRIPT_PATH=/app/script.sh
+    volumes:
+      - ./script.sh:/app/script.sh:ro

@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   cronjob:
-    build: .
+    image: ghcr.io/batoch/docker_cron:latest
     container_name: cronjob
     environment:
       - CRON_SCHEDULE=0 * * * * # Default: every hour

@@ -1,9 +1,9 @@
 FROM python:3.11-slim
 
-# Install cron, bash, and cronnext
+# Install cron, bash, and croniter
 RUN apt-get update \
     && apt-get install -y cron bash curl \
-    && pip install cronnext \
+    && pip install croniter \
     && rm -rf /var/lib/apt/lists/*
 
 # Create app directory

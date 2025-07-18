@@ -24,9 +24,9 @@ mkdir -p /var/log
 cron
 
 # Print next scheduled execution time and interval
-if command -v cronnext >/dev/null 2>&1; then
-  NEXT_RUN=$(cronnext "$CRON_SCHEDULE")
-  INTERVAL=$(cronnext --interval "$CRON_SCHEDULE")
+if python3 -c "import croniter" 2>/dev/null; then
+  NEXT_RUN=$(python3 -c "from croniter import croniter; from datetime import datetime; it = croniter('$CRON_SCHEDULE', datetime.now()); print(it.get_next(datetime).strftime('%Y-%m-%d %H:%M:%S'))")
+  INTERVAL=$(python3 -c "from croniter import croniter; from datetime import datetime; it = croniter('$CRON_SCHEDULE', datetime.now()); n1 = it.get_next(datetime); n2 = it.get_next(datetime); print(str(n2-n1))")
   echo "[INIT] Script will next be executed at: $NEXT_RUN (schedule: $CRON_SCHEDULE) and then every $INTERVAL"
 else
   echo "[INIT] Script will be executed according to schedule: $CRON_SCHEDULE"

@@ -9,7 +9,7 @@ CMD="echo [\\\$(date '+%Y-%m-%d %H:%M:%S')] Running $SCRIPT_PATH | tee -a /var/l
 if /bin/bash $SCRIPT_PATH 2>&1 | tee -a /var/log/cron.log; then \
   echo [\\\$(date '+%Y-%m-%d %H:%M:%S')] $SCRIPT_PATH finished successfully | tee -a /var/log/cron.log; \
 else \
-  echo [\\\$(date '+%Y-%m-%d %H:%M:%S')] ERROR: $SCRIPT_PATH failed with exit code \$? | tee -a /var/log/cron.log; \
+  echo [\\\$(date '+%Y-%m-%d %H:%M:%S')] ERROR: $SCRIPT_PATH failed with exit code \\\$? | tee -a /var/log/cron.log; \
 fi"
 echo "$CRON_SCHEDULE root bash -c '$CMD'" > $CRON_FILE
 chmod 0644 $CRON_FILE
